@@ -41,7 +41,7 @@ const Contacts = (props) => {
         <div className="contact-container">
             {
                 users.map((user) => (
-                    <div className="contact-container" key={user.id}>
+                    <div className="contact-container" key={selectedUser.id}>
                         <ListItem button id={user.id} onClick={() => setSelectedUser(user)}>
                             <img alt="" src={user.picture} className={classes.img}></img>
                             <ListItemText primary={user.name} />
