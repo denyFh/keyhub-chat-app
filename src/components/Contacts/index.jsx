@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { makeStyles } from "@mui/styles";
 
-import { useQuery, useSubscription } from "@apollo/client";
+import { useSubscription } from "@apollo/client";
 import { GET_DATA } from "../../gql/ContactList";
 import { useRecoilState } from "recoil";
 import { selectedUserState } from "../../recoil";

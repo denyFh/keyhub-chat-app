@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
         height: "calc(100% - 120px)",
         paddingLeft: theme.spacing(0),
         overflowY: "auto",
+        overflowX: "hidden",
         scrollbarColor: "rgba(0,0,0,.2) rgba(255,255,255,.1)",
         scrollbarWidth: "thin",
     },
