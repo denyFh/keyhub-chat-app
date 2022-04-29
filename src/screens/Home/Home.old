@@ -1,0 +1,208 @@
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MailIcon from '@mui/icons-material/Mail';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Hidden from '@mui/material/Hidden';
+import { makeStyles, useTheme } from '@mui/styles';
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+
+const drawerWidth = 300;
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+        height: "calc(100% - 40px)",
+    },
+    drawer: {
+        [theme.breakpoints.up("sm")]: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
+    },
+    appBar: {
+        [theme.breakpoints.up("sm")]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+        },
+        background: "#f5f5f5",
+        color: "rgba(0,0,0,.87)",
+        boxShadow: "unset",
+        borderBottom: "1px solid rgba(0,0,0,.12)",
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up("sm")]: {
+            display: "none",
+        },
+    },
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(2),
+        display: "flex",
+        marginTop: "40px",
+        flexWrap: "wrap",
+        height: "100%",
+    },
+    chatFooter: {
+        flexBasis: "100%",
+        height: "100px",
+        background: "#f6f6f6",
+        borderRadius: "15px",
+    },
+    chatContent: {
+        width: "100%",
+        height: "calc(100% - 100px)",
+        paddingLeft: theme.spacing(4),
+        overflowY: "scroll",
+    },
+    messageForm: {
+        overflow: "hidden",
+        margin: "20px",
+        padding: "0",
+    },
+}));
+
+const Home = (props) => {
+    const { window } = props;
+    const classes = useStyles();
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
+    // const drawer = (
+    //     <div>
+    //         <div className={classes.toolbar} />
+    //         <List>
+    //             contact disini
+    //         </List>
+    //     </div>
+    // );
+
+    const drawer = (
+        <div>
+          <Toolbar />
+          <Divider />
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      );
+
+    const container =
+        window !== undefined ? () => window().document.body : undefined;
+
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <AppBar position="fixed" className={classes.appBar}>
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        className={classes.menuButton}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap>
+                        Armin
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <nav className={classes.drawer} aria-label="mailbox folders">
+                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                <Hidden smUp implementation="css">
+                    <Drawer
+                        container={container}
+                        variant="temporary"
+                        anchor={theme.direction === "rtl" ? "right" : "left"}
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
+                    >
+                        {drawer}
+                    </Drawer>
+                </Hidden>
+                <Hidden xsDown implementation="css">
+                    <Drawer
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open
+                    >
+                        {drawer}
+                    </Drawer>
+                </Hidden>
+            </nav>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+
+                <div className={classes.chatContent}>
+                    pesan disini
+                </div>
+
+                <div className={classes.chatFooter}>
+                    <form className={classes.messageForm} noValidate autoComplete="off">
+                        <TextField
+                            id="input-message"
+                            className={classes.messageForm.input}
+                            variant="outlined"
+                            placeholder="type your message..."
+                            fullWidth={true}
+                            style={{ background: "#fff" }}
+                        />
+                    </form>
+                </div>
+            </main>
+        </div>
+    );
+};
+
+export default Home;
