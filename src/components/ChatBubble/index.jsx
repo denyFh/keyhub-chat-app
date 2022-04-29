@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     color: "#999",
     textAlign: props => props.isMe ? "right" : "left",
-    marginLeft: props => props.isMe ? "-26px" : "6px",
+    marginLeft: props => props.isMe ? "-14px" : "6px",
   },
 
   message: {
