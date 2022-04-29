@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { makeStyles } from "@mui/styles";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import { GET_DATA } from "../../gql/ContactList";
 import { useRecoilState } from "recoil";
 import { selectedUserState } from "../../recoil";
@@ -28,7 +28,7 @@ const Contacts = (props) => {
 
     const [selectedUser, setSelectedUser] = useRecoilState(selectedUserState);
 
-    const { data } = useQuery(GET_DATA, {
+    const { data } = useSubscription(GET_DATA, {
         variables: { order_by: { name: "asc" }, _neq: user.sub },
     });
 

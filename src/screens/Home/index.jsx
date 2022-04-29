@@ -55,19 +55,13 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
     },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(2),
-        display: "flex",
-        marginTop: "40px",
-        flexWrap: "wrap",
-        height: "100%",
-    },
     chatContent: {
         width: "100%",
         height: "calc(100% - 120px)",
         paddingLeft: theme.spacing(0),
         overflowY: "auto",
+        scrollbarColor: "rgba(0,0,0,.2) rgba(255,255,255,.1)",
+        scrollbarWidth: "thin",
     },
     messageForm: {
         overflow: "hidden",
@@ -170,7 +164,7 @@ const Home = (props) => {
                 >
                     <Toolbar 
                     className={classes.toolbar} 
-                    sx={{minHeight: "40px!important"}}
+                    sx={{minHeight: "58px!important"}}
                     />
 
                     <div className={classes.chatContent}>
