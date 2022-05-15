@@ -90,6 +90,8 @@ const MessageHeader = () => {
 
     const createdByMeGroups = data?.groups.map(i => i.groupName)
 
+    console.log( createdByMeGroups )
+
     // console.log("kondisi1", data?.groups[0].creator === user?.sub);
     // console.log(createdByMeGroups);
     // console.log("kondisi2", createdByMeGroups.includes(selectedGroup.groupName), `${data?.groups[0].groupName} | ${selectedGroup.groupName}`)
@@ -141,7 +143,7 @@ const MessageHeader = () => {
                 >
                     {selectedGroup?.groupName}
                 </Typography>
-                {data?.groups[0].creator === user?.sub && createdByMeGroups.includes(selectedGroup.groupName) &&
+                {createdByMeGroups.includes(selectedGroup.groupName) &&
                     <div onClick={() => setShowModalMember(true)} className={`p-1 mr-5 create-button hover:rounded hover:cursor-pointer active:scale-90 ${isdarkMode ? "hover:bg-rose-600" : "hover:bg-white hover:shadow-md"}`}>
                         <BsFillPersonPlusFill fill={`${isdarkMode ? "#fff" : "#B45309"}`}></BsFillPersonPlusFill>
                     </div>
