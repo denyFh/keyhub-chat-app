@@ -1,0 +1,8 @@
+.submit-button svg {
+    width: 54px;
+    height: 54px;
+}
+
+.submit-button svg:active {
+    transform: scale(93%);
+}

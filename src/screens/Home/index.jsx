@@ -10,16 +10,20 @@ import List from '@mui/material/List';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import { makeStyles, useTheme } from '@mui/styles';
-import { ExitToAppTwoTone } from '@mui/icons-material';
 
 import { RecoilRoot } from 'recoil';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+import { useSelector } from 'react-redux';
+
 import Message from '../Message';
-import Contacts from '../../components/Contacts';
+import Conversation from '../../components/Conversation';
 import MessageHeader from '../../components/MessageHeader';
 import MessageForm from '../../components/MessageForm';
+import ToggleDarkMode from '../../components/ToggleDarkMode';
+import SidebarHeader from '../../components/SidebarHeader';
+import UserProfile from '../../components/UserProfile';
 
 const drawerWidth = 330;
 
@@ -51,9 +55,11 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-        width: drawerWidth,
+    toolbar: {
+        minHeight: "58px!important",
+    },
+    toolbarSide: {
+        height: "calc(100% - 4rem)",
     },
     chatContent: {
         width: "100%",
@@ -71,23 +77,40 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Home = (props) => {
-    const { window } = props;
+const Home = ({ window }) => {
     const { logout } = useAuth0();
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [startChat, setStartChat] = useState(false);
+    const mode = useSelector((state) => state.darkMode.darkMode);
+    const { isdarkMode } = mode;
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
+    const handleStartChat = () => {
+        setStartChat(!startChat);
+    }
+
     const drawer = (
-        <div>
-            <div className={classes.toolbar}>
-                <List>
-                    <Contacts></Contacts>
+        <div className={`h-[calc(100%-4rem)]`}>
+            <div onClick={handleStartChat} className="absolute top-0 z-[1200] w-full">
+                <SidebarHeader>
+                </SidebarHeader>
+            </div>
+            <div className="flex flex-col justify-between h-full">
+                <List sx={{
+                    marginTop: "64px",
+                    paddingTop: "1px",
+                    overflowY: "auto"
+                }}>
+                    <div onClick={handleDrawerToggle}>
+                        <Conversation></Conversation>
+                    </div>
                 </List>
+                <UserProfile></UserProfile>
             </div>
         </div>
     );
@@ -100,9 +123,16 @@ const Home = (props) => {
                 <CssBaseline />
                 <AppBar
                     position="fixed"
-                    sx={{
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                    ml: { sm: `${drawerWidth}px` },
+                    sx={isdarkMode ? {
+                        width: { sm: `calc(100% - ${drawerWidth}px)` },
+                        ml: { sm: `${drawerWidth}px` },
+                        bgcolor: "#0E7490",
+                        boxShadow: "0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                    } : {
+                        width: { sm: `calc(100% - ${drawerWidth}px)` },
+                        ml: { sm: `${drawerWidth}px` },
+                        bgcolor: "#ffdc81",
+                        boxShadow: "0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
                     }}
                 >
                     <Toolbar>
@@ -116,20 +146,26 @@ const Home = (props) => {
                             <MenuIcon />
                         </IconButton>
                         <MessageHeader></MessageHeader>
-                        <ExitToAppTwoTone
-                            onClick={() => 
-                            logout({
-                                returnTo: process.env.REACT_APP_BASE_URL,
-                            })
-                        }
+                        <ToggleDarkMode></ToggleDarkMode>
+                        <div
+                            className={`border-2 border-solid rounded p-0.5 hover:cursor-pointer active:scale-90 ${isdarkMode ? "border-white hover:bg-rose-500" : "border-amber-700 hover:bg-white"}`}
+                            onClick={() =>
+                                logout({
+                                    returnTo: process.env.REACT_APP_BASE_URL,
+                                })
+                            }
                         >
-                        </ExitToAppTwoTone>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill={`${isdarkMode ? "#fff" : "#B45309"}`} height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+                            </svg>
+                        </div>
                     </Toolbar>
                 </AppBar>
                 <Box
                     component="nav"
                     className={classes.drawer}
-                    aria-label="mailbox folders"
+                    aria-label="chat drawer"
                 >
                     {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                     <Drawer
@@ -141,18 +177,25 @@ const Home = (props) => {
                         ModalProps={{
                             keepMounted: true, // Better open performance on mobile.
                         }}
-                        sx={{
+                        sx={isdarkMode ? {
                             display: { xs: 'block', sm: 'none' },
-                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, bgcolor: "#292c35"},
+                        } : {
+                            display: { xs: 'block', sm: 'none' },
+                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, bgcolor: "#ffa680"},
                         }}
                     >
                         {drawer}
                     </Drawer>
                     <Drawer
                         variant="permanent"
-                        sx={{
+                        className={classes.toolbarSide}
+                        sx={isdarkMode ? {
                             display: { xs: 'none', sm: 'block' },
-                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, bgcolor: "#292c35"},
+                        } : {
+                            display: { xs: 'none', sm: 'block' },
+                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, bgcolor: "#ffa680"},
                         }}
                         open
                     >
@@ -160,12 +203,15 @@ const Home = (props) => {
                     </Drawer>
                 </Box>
                 <Box
+                    className="p-0 mt-6 sm:p-6"
                     component="main"
-                    sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+                    sx={{
+                        flexGrow: 1,
+                        width: { sm: `calc(100% - ${drawerWidth}px)` }
+                    }}
                 >
-                    <Toolbar 
-                    className={classes.toolbar} 
-                    sx={{minHeight: "58px!important"}}
+                    <Toolbar
+                        className={classes.toolbar}
                     />
 
                     <div className={classes.chatContent}>

@@ -1,6 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import moment from "moment";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     padding: "0 16px 4px",
     paddingLeft: props => props.isMe ? "40px" : "16px",
-    marginTop: "28px",
+    marginTop: "16px",
   },
 
   img: {
@@ -27,37 +28,35 @@ const useStyles = makeStyles((theme) => ({
   bubble: {
     position: "relative",
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
     justifyContent: "center",
     padding: "12px",
-    maxWidth: "100%",
+    maxWidth: "60%",
     borderRadius: "12px",
-    backgroundColor: props => props.isMe ? "#e0e0e0" : "#3c4252",
-    color: props => props.isMe ? "rgba(0,0,0,.87)" : "#fff",
+    // backgroundColor: props => props.isMe ? "#0e7490" : "#14B8A6",
+    color: props => props.isMe ? "#fff" : "#fff",
     marginLeft: props => props.isMe ? "auto" : "initial",
   },
 
   timestamp: {
-    position: "absolute",
     width: "100%",
     fontSize: "11px",
     marginTop: "6px",
     top: "100%",
     left: "0",
     whiteSpace: "nowrap",
-    color: "#999",
+    color: "#ffffff99",
     textAlign: props => props.isMe ? "right" : "left",
-    marginLeft: props => props.isMe ? "-14px" : "6px",
   },
 
   message: {
-    position: "relative",
     maxWidth: "100%",
     [theme.breakpoints.down("sm")]: {
       maxWidth: "320px"
     },
     overflowWrap: "break-word",
     whiteSpace: "pre-wrap",
+    textAlign: "left",
   }
 }));
 
@@ -65,11 +64,24 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatBubble = (props) => {
   const classes = useStyles(props);
-  const { message } = props;
+  const { message, name } = props;
+  const mode = useSelector((state) => state.darkMode.darkMode);
+  const { isdarkMode } = mode;
 
   return (
     <div className={classes.root} >
-      <div className={classes.bubble}>
+      <div className={`${classes.bubble} ${!isdarkMode && props.isMe && "bg-[#d97706]"} ${isdarkMode && props.isMe && "bg-[#2993e9]"} ${!isdarkMode && !props.isMe && "bg-[#d87a5f]"} ${isdarkMode && !props.isMe && "bg-[#0a7988]"}`}>
+        {
+          name ? (
+            <div className={`
+            text-sm font-bold
+            ${props.isMe && "hidden"} 
+            ${isdarkMode ? "text-cyan-400" : "text-amber-300"}
+            `}>{name}</div>
+          ) : (
+            <div className=""></div>
+          )
+        }
         <div className={classes.message}>
           {message.message}
         </div>
