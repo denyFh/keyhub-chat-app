@@ -44,6 +44,8 @@ const MessageHeader = () => {
         nextFetchPolicy: "no-cache"
     });
 
+    // console.log("admingrup", data);
+
 
     const members = dataAllMember?.group_member.map(i => i.userId);
     const nonMember = dataAllMember?.users.filter(i => !members.includes(i.id))
@@ -98,7 +100,7 @@ const MessageHeader = () => {
 
     const createdByMeGroups = data?.groups.map(i => i.groupName)
 
-    // console.log( createdByMeGroups )
+    console.log( createdByMeGroups )
 
     // console.log("kondisi1", data?.groups[0].creator === user?.sub);
     // console.log(createdByMeGroups);

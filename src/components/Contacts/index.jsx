@@ -51,8 +51,11 @@ const Contacts = () => {
             _eq: user?.sub,
             creator: user?.sub,
             groupName: groupName,
-        }
-    })
+        },
+        refetchQueries: [
+            "CekCreator",
+        ]
+    });
 
     const handleSubmitCreate = (e) => {
         e.preventDefault()
@@ -76,7 +79,6 @@ const Contacts = () => {
                 showConfirmButton: false
             }).then(() => {
                 setGroupName("");
-                // window.location.reload();
             })
         }
     }
