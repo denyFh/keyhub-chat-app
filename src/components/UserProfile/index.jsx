@@ -62,7 +62,7 @@ const UserProfile = () => {
         }
     }
 
-    console.log(userData);
+    // console.log(userData);
 
     return (
         <>

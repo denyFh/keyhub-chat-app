@@ -2,6 +2,8 @@ import React from "react";
 
 import logo from "../../logo.svg";
 
+import _ from "lodash";
+
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { makeStyles } from "@mui/styles";
@@ -28,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Conversation = (props) => {
-    var _ = require('lodash');
     const classes = useStyles(props);
     
     const { user } = useAuth0();
@@ -55,12 +56,21 @@ const Conversation = (props) => {
     })
 
     // console.log("usergroup", dataUserGroup);
+    const contactedArr = dataContacted?.users;
+    const newcomerArr = dataNewcomer?.users;
 
-    if (dataNewcomer && dataNewcomer.users && !dataContacted) {
-        users.push(...dataNewcomer.users)
-    } else if (dataContacted && dataContacted.users && !dataNewcomer) {
-        users.push(...dataContacted.users)
-    } else if (dataNewcomer && dataNewcomer.users && dataContacted && dataContacted.users) {
+    console.log("datacontacted", dataContacted, dataContacted?.users, contactedArr === 0);
+    console.log("datanewcomer", dataNewcomer, dataNewcomer?.users, newcomerArr === 0);
+
+    // if (dataNewcomer && dataNewcomer?.users && !dataContacted ) {
+    //     console.log("masuk satu");
+    //     users.push(...dataNewcomer.users)
+    // } else if (dataContacted && dataContacted?.users && !dataNewcomer ) {
+    //     console.log("masuk dua");
+    //     users.push(...dataContacted.users)
+    // } else 
+    if (dataNewcomer && dataNewcomer.users && dataContacted && dataContacted.users) {
+        console.log("masuk tiga")
         const mergeByProperty = (arr1, arr2, prop) => {
             _.each(arr2, function (arr2obj) {
                 var arr1obj = _.find(arr1, function (arr1obj) {
@@ -71,8 +81,8 @@ const Conversation = (props) => {
             });
         }
 
-        var target /* arr1 */ = dataContacted.users;
-        var source /* arr2 */ = dataNewcomer.users;
+        var target /* arr1 */ = dataNewcomer.users;
+        var source /* arr2 */ = dataContacted.users;
 
         mergeByProperty(target, source, 'id');
 

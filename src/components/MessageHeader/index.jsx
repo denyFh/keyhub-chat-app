@@ -65,6 +65,7 @@ const MessageHeader = () => {
     const handleSubmitMember = (e) => {
         e.preventDefault();
         if (selectedMember === "") {
+            setShowModalMember(false);
             Swal.fire({
                 position: 'bottom-right',
                 text: 'Harus memilih anggota baru!',
@@ -72,9 +73,12 @@ const MessageHeader = () => {
                 timerProgressBar: true,
                 showConfirmButton: false,
                 width: "fit-content"
+            }).then(() => {
+                setShowModalMember(true);
             });
         } else {
             insertGrupMember();
+            setShowModalMember(false);
             Swal.fire({
                 position: 'bottom-right',
                 text: "Anggota Berhasil Ditambahkan!",
@@ -83,14 +87,14 @@ const MessageHeader = () => {
                 showConfirmButton: false,
                 width: "fit-content"
             }).then(() => {
-                setSelectedMember("");
+                setShowModalMember(true);
             });
         }
     }
 
     const createdByMeGroups = data?.groups.map(i => i.groupName)
 
-    console.log( createdByMeGroups )
+    // console.log( createdByMeGroups )
 
     // console.log("kondisi1", data?.groups[0].creator === user?.sub);
     // console.log(createdByMeGroups);
@@ -189,6 +193,7 @@ const MessageHeader = () => {
                                                         }}
                                                         onChange={(e) => setSelectedMember(e.target.value)}
                                                     >
+                                                        <option value="" disabled>Silahkan Pilih Satu</option>
                                                         {
                                                             nonMember?.map((member) => (
                                                                 <option value={member.id} key={member.id}>{member.name}</option>
@@ -213,7 +218,7 @@ const MessageHeader = () => {
                                                     className="px-4 py-2 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-100 ease-linear bg-green-500 rounded outline-none hover:bg-green-600 focus:outline-none"
                                                     type="submit"
                                                 >
-                                                    Create Group
+                                                    Add Member
                                                 </button>
                                             </div>
                                         </form>
