@@ -75,14 +75,17 @@ const Conversation = (props) => {
 
     if ((dataNewcomer && dataNewcomer?.users) || (dataContacted && dataContacted?.users)) {
         console.log("masuk tiga")
+
         const mergeByProperty = (arr1, arr2, prop) => {
+            const firstArr = arr1 || []; 
             _.each(arr2, function (arr2obj) {
-                var arr1obj = _.find(arr1, function (arr1obj) {
+                var arr1obj = _.find(firstArr, function (arr1obj) {
                     return arr1obj[prop] === arr2obj[prop];
                 });
 
-                arr1obj ? _.extend(arr1obj, arr2obj) : arr1.push(arr2obj);
+                arr1obj ? _.extend(arr1obj, arr2obj) : firstArr.push(arr2obj);
             });
+            arr1 = firstArr;
         }
 
         var target /* arr1 */ = dataNewcomer?.users;
@@ -93,7 +96,9 @@ const Conversation = (props) => {
 
         mergeByProperty(target, source, 'id');
 
-        users?.push(...target);
+        if (target) {
+            users?.push(...target);
+        }
     }
 
     if (loadingNewcomer && loadingContacted && loadingGroups) {
