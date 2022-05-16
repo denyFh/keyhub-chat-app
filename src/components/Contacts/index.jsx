@@ -27,6 +27,7 @@ const Contacts = () => {
 
     const { data, loading } = useSubscription(GET_DATA, {
         variables: { order_by: { name: "asc" }, _neq: user.sub },
+        fetchPolicy: "no-cache"
     });
 
     const mode = useSelector((state) => state.darkMode.darkMode);
@@ -75,7 +76,7 @@ const Contacts = () => {
                 showConfirmButton: false
             }).then(() => {
                 setGroupName("");
-                window.location.reload();
+                // window.location.reload();
             })
         }
     }

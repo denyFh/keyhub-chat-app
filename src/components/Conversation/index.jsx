@@ -45,14 +45,17 @@ const Conversation = (props) => {
     
     const { data: dataNewcomer, loading: loadingNewcomer } = useSubscription(GET_NEWCOMER_USER, {
         variables: { order_by: { name: "desc" }, _neq: user.sub },
+        fetchPolicy: "no-cache",
     });
 
     const { data: dataContacted, loading: loadingContacted } = useSubscription(GET_CONTACTED_USER, {
         variables: { order_by: { name: "asc" }, _neq: user.sub },
+        fetchPolicy: "no-cache",
     });
 
     const { data: dataUserGroup, loading: loadingGroups } = useSubscription(CHECK_USER_GROUPS, {
         variables: { _eq: user.sub},
+        fetchPolicy: "no-cache",
     })
 
     // console.log("usergroup", dataUserGroup);
@@ -66,7 +69,11 @@ const Conversation = (props) => {
     //     console.log("masuk dua");
     //     users.push(...dataContacted.users)
     // } else 
-    if ((dataNewcomer && dataNewcomer.users) || (dataContacted && dataContacted.users)) {
+
+    console.log("newcomer", dataNewcomer)
+    console.log("contacted", dataContacted)
+
+    if ((dataNewcomer && dataNewcomer?.users) || (dataContacted && dataContacted?.users)) {
         console.log("masuk tiga")
         const mergeByProperty = (arr1, arr2, prop) => {
             _.each(arr2, function (arr2obj) {
@@ -78,12 +85,15 @@ const Conversation = (props) => {
             });
         }
 
-        var target /* arr1 */ = dataNewcomer.users;
-        var source /* arr2 */ = dataContacted.users;
+        var target /* arr1 */ = dataNewcomer?.users;
+        var source /* arr2 */ = dataContacted?.users;
+
+        console.log("target",target)
+        console.log("source", source)
 
         mergeByProperty(target, source, 'id');
 
-        users.push(...target);
+        users?.push(...target);
     }
 
     if (loadingNewcomer && loadingContacted && loadingGroups) {

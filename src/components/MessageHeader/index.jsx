@@ -31,13 +31,17 @@ const MessageHeader = () => {
     const { data, refetch: refetchCreator } = useQuery(GET_CREATOR, {
         variables: {
             _eq: user?.sub
-        }
+        },
+        fetchPolicy: "no-cache",
+        nextFetchPolicy: "no-cache"
     });
 
     const { data: dataAllMember, refetch } = useQuery(GET_ALLMEMBER, {
         variables: {
             groupId: selectedGroup.id
-        }
+        },
+        fetchPolicy: "no-cache",
+        nextFetchPolicy: "no-cache"
     });
 
 
