@@ -58,23 +58,7 @@ const Conversation = (props) => {
         fetchPolicy: "no-cache",
     })
 
-    // console.log("usergroup", dataUserGroup);
-    // const contactedArr = dataContacted?.users;
-    // const newcomerArr = dataNewcomer?.users;
-
-    // if (dataNewcomer && dataNewcomer?.users && !dataContacted ) {
-    //     console.log("masuk satu");
-    //     users.push(...dataNewcomer.users)
-    // } else if (dataContacted && dataContacted?.users && !dataNewcomer ) {
-    //     console.log("masuk dua");
-    //     users.push(...dataContacted.users)
-    // } else 
-
-    console.log("newcomer", dataNewcomer)
-    console.log("contacted", dataContacted)
-
     if ((dataNewcomer && dataNewcomer?.users) || (dataContacted && dataContacted?.users)) {
-        console.log("masuk tiga")
 
         const mergeByProperty = (arr1, arr2, prop) => {
             const firstArr = arr1 || []; 
@@ -90,9 +74,6 @@ const Conversation = (props) => {
 
         var target /* arr1 */ = dataNewcomer?.users;
         var source /* arr2 */ = dataContacted?.users;
-
-        console.log("target",target)
-        console.log("source", source)
 
         mergeByProperty(target, source, 'id');
 
