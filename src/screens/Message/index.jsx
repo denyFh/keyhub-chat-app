@@ -1,4 +1,4 @@
-import loadingGif from "../../chatLoading.gif";
+import loadingGif from "../../assets/chatLoading.gif";
 
 import { useRecoilState } from "recoil";
 import { selectedGroupState, selectedUserState } from "../../recoil";

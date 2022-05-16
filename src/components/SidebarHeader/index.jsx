@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { useRecoilState } from 'recoil';
 import { selectedGroupState, selectedUserState } from '../../recoil';
 
-import logoBlack from '../../keyLogo-black.png';
-import logoWhite from '../../keyLogo-white.png';
+import logoBlack from '../../assets/keyLogo-black.png';
+import logoWhite from '../../assets/keyLogo-white.png';
 import Contacts from '../Contacts';
 
 const SidebarHeader = () => {

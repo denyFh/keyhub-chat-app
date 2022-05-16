@@ -1,7 +1,6 @@
 import logo from './logo.svg';
-import introgif from './introtyping.gif';
+import introgif from './assets/introtyping.gif';
 
-import './App.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from '@mui/material/Button'
 import Home from './screens/Home';

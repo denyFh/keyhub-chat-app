@@ -100,7 +100,7 @@ const MessageHeader = () => {
 
     const createdByMeGroups = data?.groups.map(i => i.groupName)
 
-    console.log( createdByMeGroups )
+    // console.log( createdByMeGroups )
 
     // console.log("kondisi1", data?.groups[0].creator === user?.sub);
     // console.log(createdByMeGroups);
@@ -199,7 +199,7 @@ const MessageHeader = () => {
                                                         }}
                                                         onChange={(e) => setSelectedMember(e.target.value)}
                                                     >
-                                                        <option value="" disabled>Silahkan Pilih Satu</option>
+                                                        <option defaultValue="" selected disabled>Silahkan Pilih Satu</option>
                                                         {
                                                             nonMember?.map((member) => (
                                                                 <option value={member.id} key={member.id}>{member.name}</option>

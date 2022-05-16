@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         height: "calc(100% - 40px)",
+        fontFamily: "'Source Sans Pro', sans-serif",
+        fontSize: "1.1rem"
     },
     drawer: {
         [theme.breakpoints.up("sm")]: {
