@@ -56,11 +56,8 @@ const Conversation = (props) => {
     })
 
     // console.log("usergroup", dataUserGroup);
-    const contactedArr = dataContacted?.users;
-    const newcomerArr = dataNewcomer?.users;
-
-    console.log("datacontacted", dataContacted, dataContacted?.users, contactedArr === 0);
-    console.log("datanewcomer", dataNewcomer, dataNewcomer?.users, newcomerArr === 0);
+    // const contactedArr = dataContacted?.users;
+    // const newcomerArr = dataNewcomer?.users;
 
     // if (dataNewcomer && dataNewcomer?.users && !dataContacted ) {
     //     console.log("masuk satu");
@@ -69,7 +66,7 @@ const Conversation = (props) => {
     //     console.log("masuk dua");
     //     users.push(...dataContacted.users)
     // } else 
-    if (dataNewcomer && dataNewcomer.users && dataContacted && dataContacted.users) {
+    if ((dataNewcomer && dataNewcomer.users) || (dataContacted && dataContacted.users)) {
         console.log("masuk tiga")
         const mergeByProperty = (arr1, arr2, prop) => {
             _.each(arr2, function (arr2obj) {
