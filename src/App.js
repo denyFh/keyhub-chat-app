@@ -37,11 +37,11 @@ const App = () => {
   return (
     <ApolloProvider client={Client({ token })}>
       <Routes>
+        <Route path='*' element={<ErrorPage />} />
         <Route path="landing" element={<Landing />} />
         <Route element={<ProtectedRoute authenticated={isAuthenticated}/>}>
           <Route path="/" element={<Home />} />
         </Route>
-        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </ApolloProvider>
   );
