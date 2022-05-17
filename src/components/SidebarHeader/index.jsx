@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { selectedGroupState, selectedUserState } from '../../recoil';
 
 import logoBlack from '../../assets/keyLogo-black.png';
-import logoWhite from '../../assets/keyLogo-white.png';
+import logoWhite from '../../assets/keyLogo-white.svg';
 import Contacts from '../Contacts';
 
 const SidebarHeader = () => {

@@ -1,0 +1,9 @@
+.slick-slider button {
+    display: none!important;
+}
+
+.logo-container {
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+}
